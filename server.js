@@ -4,11 +4,19 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const indexRouter = require('./router.js');
+const sequelizeDB = require('./sequelizeDbConnect')
 
 const app = express();
  
 // app.use(express.json());
- 
+
+// check sequelize connection
+sequelizeDB.authenticate().then(() => {
+  console.log('Connected...')
+}).catch((e) => {
+  console.log('Unable to connect due to: ', e)
+})
+
 app.use(bodyParser.json());
  
 app.use(bodyParser.urlencoded({
