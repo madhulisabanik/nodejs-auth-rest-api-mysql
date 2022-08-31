@@ -6,6 +6,7 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./model/User');
+const Unit = require('./model/Unit');
 
 router.post('/register', signupValidation, (req, res, next) => {
     let response = {
@@ -197,6 +198,10 @@ router.post('/get-user', signupValidation, (req, res, next) => {
     User.findOne({
         where: {
             id: decoded.id
+        },
+        include: {
+            model: Unit,
+            attributes: ['id', 'unitName']
         },
         attributes: ['id', 'name', 'email']
     }).then((userResult) => {

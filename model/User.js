@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelizeDB = require('../sequelizeDbConnect');
+const Unit = require('../model/Unit');
 
 const User = sequelizeDB.define('User', {
     id: {
@@ -22,6 +23,11 @@ const User = sequelizeDB.define('User', {
 },
 {
     tableName: 'users'
+});
+
+// Adding Foreign key constrain to join units table, as one User can have multiple Units
+User.hasMany(Unit, {
+    foreignKey: 'userId'
 });
 
 module.exports = User;
